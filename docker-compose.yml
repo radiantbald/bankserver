@@ -1,12 +1,12 @@
 services:
   db:
     image: postgres:13-alpine
-    container_name: myapp-db
+    container_name: user_info_container
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=serveruser
-      - POSTGRES_PASSWORD=serverpass
-      - POSTGRES_DB=serverdb
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=user_info_db
     ports:
       - "5432:5432"
     volumes:
