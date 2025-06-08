@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: myapp-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=serveruser
+      - POSTGRES_PASSWORD=serverpass
+      - POSTGRES_DB=serverdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
