@@ -1,51 +1,24 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
 )
 
-type requestData struct {
-	Name string `json:"name"`
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	fmt.Fprint(w, "Welcome!\n")
 }
 
-type responseData struct {
-	Name string `json:"greeting"`
-}
-
-func helloWorld(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello Worlddddd")
-}
-
-func jsonHelloWorld(w http.ResponseWriter, r *http.Request) {
-
-	switch r.Method {
-	case http.MethodPost:
-		var data requestData
-		err := json.NewDecoder(r.Body).Decode(&data)
-		if err != nil {
-			return
-		}
-		var response = responseData{
-			Name: "Hello " + data.Name,
-		}
-		json.NewEncoder(w).Encode(response)
-	case http.MethodGet:
-		var name = r.URL.Query().Get("name")
-		var response = responseData{
-			Name: "GET " + name,
-		}
-		json.NewEncoder(w).Encode(response)
-	}
-
+func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
 }
 
 func main() {
-	http.HandleFunc("/", helloWorld)
-	http.HandleFunc("/json", jsonHelloWorld)
+	router := httprouter.New()
+	router.GET("/", Index)
+	router.GET("/hello/:name", Hello)
 
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
