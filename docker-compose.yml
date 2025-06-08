@@ -4,9 +4,9 @@ services:
     container_name: user_info_container
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=user_info_db
+      POSTGRES_USER: ${USER_INFO_USER}
+      POSTGRES_PASSWORD: ${USER_INFO_PASS}
+      POSTGRES_DB: ${USER_INFO_DB}
     ports:
       - "5432:5432"
     volumes:
