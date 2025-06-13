@@ -16,7 +16,10 @@ func Connect() error {
 	password := os.Getenv("DB_PASSWORD")
 	database := os.Getenv("DB_DATABASE")
 	sslmode := os.Getenv("DB_SSLMODE")
-	dsn := fmt.Sprintf("host=localhost port=%s user=%s password=%s dbname=%s  sslmode=disable", host, port, user, password, database, sslmode)
+
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s  sslmode=%s",
+		host, port, user, password, database, sslmode)
+	fmt.Println("Error connecting to database..." + dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err
