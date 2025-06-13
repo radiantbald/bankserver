@@ -4,6 +4,7 @@ import (
 	"bankserver/auth"
 	"bankserver/db"
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
@@ -11,9 +12,16 @@ import (
 
 func main() {
 
-	err := db.Connect()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+		return
+	}
+
+	err = db.Connect()
 	if err != nil {
 		fmt.Println("Error connecting to database")
+		return
 	}
 
 	router := httprouter.New()
