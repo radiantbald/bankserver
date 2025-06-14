@@ -24,6 +24,7 @@ func main() {
 	}
 
 	router := httprouter.New()
-	router.POST("/create-user/:name", auth.CreateUser)
+	router.POST("/create-user", auth.CreateUser)
+
 	log.Fatal(http.ListenAndServe(":8005", router))
 }
