@@ -35,8 +35,12 @@ func CreateUser(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		PhoneNumber: req.PhoneNumber,
 		Verified:    false,
 	}
-	
+
 	db.CreateUser(&user)
 
+	if err != nil {
+		w.WriteHeader(500)
+		return
+	}
 	fmt.Fprintf(w, "Пользователь создан, %s!\n", req.Name)
 }
