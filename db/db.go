@@ -1,6 +1,7 @@
 package db
 
 import (
+	"bankserver/models"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -27,4 +28,8 @@ func Connect() error {
 
 	DB = db
 	return nil
+}
+
+func CreateUser(user *models.User) error {
+	return DB.Create(user).Error
 }
